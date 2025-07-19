@@ -1,2 +1,5 @@
 graphviz
 libgraphviz-dev
+gcc
+g++
+build-essential
