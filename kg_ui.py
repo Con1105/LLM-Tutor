@@ -207,7 +207,6 @@ if uploaded_file:
     if 'graph' not in st.session_state or st.session_state.last_uploaded != pdf_bytes:
         graph = extract_kg_from_pdf_bytes(pdf_bytes)
         print(graph.entities)
-        print(graph.relations)
         st.session_state.graph = graph
         st.session_state.selected_nodes = set()
         st.session_state.last_uploaded = pdf_bytes

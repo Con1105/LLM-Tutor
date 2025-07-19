@@ -326,7 +326,7 @@ def build_edges_from_nested_dict(nested_dict):
     return edges
 
 # --- Step 2: Deduplicate concept names and normalize ---
-def deduplicate_entities(edges, threshold=0.85):
+def deduplicate_entities(edges, threshold=0.75):
     """Deduplicate and normalize entity names"""
     nodes = list(set([src for src, _, tgt in edges] + [tgt for _, _, tgt in edges]))
 
