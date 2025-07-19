@@ -173,8 +173,8 @@ def create_tree_layout_figure(graph, selected_nodes=None):
     )
     return fig
 
-st.title("Knowledge Graph Curriculum Customizer")
-st.write("Choose which concepts you are already familiar with or you are not interested in to remove them from curriculum.")
+st.title("Knowledge Graph Curriculum Extractor")
+st.write("Upload a paper to extract a Knowledge Graph from.")
 
 def update_selected_nodes_and_colors(graph, selected_node, selected_nodes):
     """
@@ -214,7 +214,7 @@ if uploaded_file:
     else:
         graph = st.session_state.graph
 
-    st.write("**Select concepts from the dropdown below.** Selected nodes will turn red. Children will be automatically selected if all their parents are selected.")
+    st.write("**Select concepts from the dropdown below.** Selected nodes will turn red. Press **Done** to delete them")
 
     # Node selection UI
     all_nodes = list(graph.entities)
