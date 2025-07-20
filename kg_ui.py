@@ -5,6 +5,10 @@ from io import BytesIO
 from kg_extraction import extract_kg_from_pdf_bytes, create_directed_tree_graph_from_graph_object
 from collections import defaultdict, deque
 from kg_gen import KGGen
+from kg_instance import get_kg
+
+# Ensure KGGen is initialized in main thread before Streamlit starts
+kg = get_kg()
 
 st.set_page_config(layout="wide")
 
