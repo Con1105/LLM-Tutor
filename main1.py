@@ -1,15 +1,8 @@
 from streamlit.web import cli as stcli
 import sys
 from kg_gen import KGGen
-from kg_instance import set_kg_instance,
+from kg_instance import set_kg_instance, set_thread_instance
 
-
-kg = None
-
-def get_kg():
-    if kg is None:
-        raise RuntimeError("KGGen must be initialized in main1.py before use.")
-    return kg
 
 if __name__ == "__main__":
     # Initialize KGGen here in the true main thread
