@@ -52,7 +52,7 @@ import streamlit as st
 kg = None
 
 def get_kg():
-    global _kg
+    global kg
     if kg is None:
         kg = KGGen(
             model="openai/gpt-4o",
