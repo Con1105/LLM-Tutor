@@ -41,7 +41,7 @@ import json
 from openai import OpenAI
 from difflib import get_close_matches
 from collections import Counter
-from kg_instance import get_kg_instance
+from kg_instance import get_kg_instance, kg_thread_id
 import streamlit as st
 # from kg_instance import kg
 """# KGGEN
@@ -719,6 +719,7 @@ def extract_kg_from_pdf_bytes(pdf_bytes):
         text += page.get_text()
 
     """### Generate Graph"""
+    
     graph = kg.generate(
         input_data=text,
         chunk_size=100000,
