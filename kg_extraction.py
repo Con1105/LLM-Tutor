@@ -45,6 +45,17 @@ from collections import Counter
 
 ### Initialisation
 """
+import streamlit as st
+
+@st.cache_resource
+def get_kg():
+    return KGGen(
+        model="openai/gpt-4o",
+        temperature=0.0,
+        api_key=st.secrets["OPENAI_API_KEY"]
+    )
+
+kg = get_kg()
 
 def find_main_node_triplets(graph):
     """Returns the node with the most outgoing edges (triplet format)."""
@@ -686,11 +697,6 @@ def remove_transitive_edges_verbose(graph):
 
 def extract_kg_from_pdf_bytes(pdf_bytes):
     # Create the KGGen object ONCE at the module level
-    kg = KGGen(
-        model="openai/gpt-4o",
-        temperature=0.0,
-        api_key="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"
-    )
     pdf_stream = io.BytesIO(pdf_bytes)
     doc = fitz.open(stream=pdf_stream, filetype="pdf")
     text = ""
