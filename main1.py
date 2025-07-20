@@ -10,6 +10,8 @@ if __name__ == "__main__":
     print("Initializing KGGen in main thread...")
     print("✅ Initializing KGGen in main thread...")
     set_thread_instance(threading.current_thread())
+    lm = OpenAI(model="gpt-4o", api_key="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")
+    dspy.settings.configure(lm=lm)
     kg = KGGen(
         model="openai/gpt-4o",
         temperature=0.0,
