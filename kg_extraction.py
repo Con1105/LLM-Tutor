@@ -100,6 +100,8 @@ def augment_graph_with_gpt_entities_relations(graph, pdf_text, client):
             temperature=0.0
         )
         raw_response = response.choices[0].message.content.strip()
+        print("🔍 Raw LLM response:")
+        print(raw_response)
 
         # Extract valid JSON block
         start = raw_response.find('{')
@@ -119,68 +121,6 @@ def augment_graph_with_gpt_entities_relations(graph, pdf_text, client):
 
 
 
-client = OpenAI(api_key="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")
-
-# def extract_entities_and_relations_from_text(graph, pdf_text, client):
-#     """
-#     Uses GPT to extract new educational entities and relations from the given text and update the graph in-place.
-#     """
-#     import json
-
-#     prompt = f"""
-#     You are given a Text and the extracted Entities and Relations for it.
-#     From the Text, find all the educational concepts or research topics and then find their relations between them or with existing entities in the Entities provided and append them to Entities and Relations correspondingly.
-#     For example you found Reinforcement Learning in the text, then you found Bellman Equation in the text and there is an Entity called "PPO", then you add Reinforcement Learning and Bellman Equation to the Entities and add the edges ["PPO", "is", "Reinforcement Learning"], ["Reinforcement Learning", "uses", "Bellman Equation"] to the Relations.
-
-#     Format your output as JSON like this:
-#     {{
-#       "filtered_entities": [...],
-#       "filtered_relations": [
-#         ["subject", "predicate", "object"],
-#         ...
-#       ]
-#     }}
-
-#     Text:
-#     {pdf_text}
-
-#     Entities:
-#     {list(graph.entities)}
-
-#     Relations:
-#     {list(graph.relations)}
-
-#     Return ONLY the filtered list of entities and the relations (triplets).
-#     """
-
-#     try:
-#         response = client.chat.completions.create(
-#             model="gpt-4o",
-#             messages=[{"role": "user", "content": prompt}],
-#             temperature=0.0
-#         )
-
-#         raw_response = response.choices[0].message.content.strip()
-
-#         # Extract valid JSON block
-#         start = raw_response.find('{')
-#         end = raw_response.rfind('}') + 1
-#         json_text = raw_response[start:end]
-
-#         parsed = json.loads(json_text)
-#         new_entities = set(parsed["filtered_entities"])
-#         new_relations = set(tuple(triplet) for triplet in parsed["filtered_relations"])
-
-#         # Union with existing ones
-#         all_entities = set(graph.entities).union(new_entities)
-#         all_relations = set(graph.relations).union(new_relations)
-
-#         graph.entities = list(all_entities)
-#         graph.relations = list(all_relations)
-
-#         print("✅ Extracted and updated entities and relations successfully.")
-#     except Exception as e:
-#         print("❌ Failed to extract entities and relations:", e)
 
 def add_prerequisite_relations(graph, client):
     """
@@ -220,8 +160,9 @@ def add_prerequisite_relations(graph, client):
         )
 
         raw_response = response.choices[0].message.content.strip()
-
-        # Extract valid JSON block
+        print("🔍 Raw LLM response:")
+        print(raw_response)
+        # Extract a valid JSON block
         start = raw_response.find('{')
         end = raw_response.rfind('}') + 1
         json_text = raw_response[start:end]
@@ -295,8 +236,9 @@ def convert_entities_to_dependency_dict(graph, client):
         )
 
         raw_response = response.choices[0].message.content.strip()
-
-        # Extract valid JSON block
+        print("🔍 Raw LLM response:")
+        print(raw_response)
+        # Extract a valid JSON block    
         start = raw_response.find('{')
         end = raw_response.rfind('}') + 1
         json_text = raw_response[start:end]
@@ -443,8 +385,9 @@ def convert_relations_to_dependency_format(graph, client):
         )
 
         raw_response = response.choices[0].message.content.strip()
-
-        # Extract valid JSON block
+        print("🔍 Raw LLM response:")
+        print(raw_response)
+        # Extract a valid JSON block
         start = raw_response.find('{')
         end = raw_response.rfind('}') + 1
         json_text = raw_response[start:end]
@@ -637,7 +580,8 @@ Return only the JSON.
         )
 
         raw_response = response.choices[0].message.content.strip()
-
+        print("🔍 Raw LLM response:")
+        print(raw_response)
         start = raw_response.find('{')
         end = raw_response.rfind('}') + 1
         json_text = raw_response[start:end]
