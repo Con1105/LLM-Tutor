@@ -2,6 +2,7 @@ from streamlit.web import cli as stcli
 import sys
 from kg_gen import KGGen
 from kg_instance import set_kg_instance, set_thread_instance
+import threading
 
 
 if __name__ == "__main__":
