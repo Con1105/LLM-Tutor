@@ -702,6 +702,7 @@ def remove_transitive_edges_verbose(graph):
 
 def extract_kg_from_pdf_bytes(pdf_bytes):
     # Create the KGGen object ONCE at the module level
+    kg = get_kg()
     pdf_stream = io.BytesIO(pdf_bytes)
     doc = fitz.open(stream=pdf_stream, filetype="pdf")
     text = ""
