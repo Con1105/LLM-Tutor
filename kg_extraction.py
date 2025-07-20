@@ -41,7 +41,7 @@ import json
 from openai import OpenAI
 from difflib import get_close_matches
 from collections import Counter
-from main1 import kg 
+from kg_instance import get_kg_instance
 import streamlit as st
 # from kg_instance import kg
 """# KGGEN
@@ -702,7 +702,7 @@ def remove_transitive_edges_verbose(graph):
 
     graph.relations = list(reduced_G.edges())
 
-def extract_kg_from_pdf_bytes(pdf_bytes, kg):
+def extract_kg_from_pdf_bytes(pdf_bytes):
     # Create the KGGen object ONCE at the module level
     # from kg_gen import KGGen  # <== lazy import here avoids thread clash
 
@@ -711,6 +711,7 @@ def extract_kg_from_pdf_bytes(pdf_bytes, kg):
     #     temperature=0.0,
     #     api_key="sk-..."
     # )
+    kg = get_kg_instance()
     pdf_stream = io.BytesIO(pdf_bytes)
     doc = fitz.open(stream=pdf_stream, filetype="pdf")
     text = ""
