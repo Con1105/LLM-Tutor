@@ -41,7 +41,7 @@ import json
 from openai import OpenAI
 from difflib import get_close_matches
 from collections import Counter
-from kg_instance import get_kg_instance, kg_thread_id
+from kg_instance import get_kg_instance
 import streamlit as st
 # from kg_instance import kg
 """# KGGEN
