@@ -49,17 +49,13 @@ import streamlit as st
 
 # In kg_extraction.py
 
-kg = None
-
+@st.cache_resource
 def get_kg():
-    global kg
-    if kg is None:
-        kg = KGGen(
-            model="openai/gpt-4o",
-            temperature=0.0,
-            api_key="sk-..."
-        )
-    return kg
+    return KGGen(
+        model="openai/gpt-4o",
+        temperature=0.0,
+        api_key=st.secrets["OPENAI_API_KEY"]
+    )
 
 
 def find_main_node_triplets(graph):
