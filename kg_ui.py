@@ -21,17 +21,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-import streamlit as st
-from kg_gen import KGGen
-from kg_extraction import extract_kg_from_pdf_bytes
-
-@st.cache_resource(show_spinner="Loading KGGen model...")
-def get_kg():
-    return KGGen(
-        model="openai/gpt-4o",
-        temperature=0.0,
-        api_key="YOUR_KEY"
-    )
 
 kg = get_kg()
 
@@ -219,7 +208,7 @@ if uploaded_file:
     pdf_bytes = uploaded_file.read()
     # Step 3: Run the function in kg_extraction.py
     if 'graph' not in st.session_state or st.session_state.last_uploaded != pdf_bytes:
-        graph = extract_kg_from_pdf_bytes(pdf_bytes, kg)
+        graph = extract_kg_from_pdf_bytes(pdf_bytes)
         print(graph.entities)
         st.session_state.graph = graph
         st.session_state.selected_nodes = set()
