@@ -1,6 +1,8 @@
 from streamlit.web import cli as stcli
 import sys
-from kg_instance import get_kg
+from kg_gen import KGGen  # or wherever KGGen is defined
+
+
 kg = None
 
 def get_kg():
