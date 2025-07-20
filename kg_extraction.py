@@ -41,7 +41,7 @@ import json
 from openai import OpenAI
 from difflib import get_close_matches
 from collections import Counter
-from main1 import get_kg 
+from main1 import kg 
 import streamlit as st
 # from kg_instance import kg
 """# KGGEN
@@ -711,7 +711,6 @@ def extract_kg_from_pdf_bytes(pdf_bytes):
     #     temperature=0.0,
     #     api_key="sk-..."
     # )
-    kg = get_kg()  # ✅ Only now it's initialized
     pdf_stream = io.BytesIO(pdf_bytes)
     doc = fitz.open(stream=pdf_stream, filetype="pdf")
     text = ""
