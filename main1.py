@@ -1,7 +1,7 @@
 from streamlit.web import cli as stcli
 import sys
 from kg_gen import KGGen
-from kg_instance import set_kg_instance
+from kg_instance import set_kg_instance,
 
 
 kg = None
@@ -15,6 +15,7 @@ if __name__ == "__main__":
     # Initialize KGGen here in the true main thread
     print("Initializing KGGen in main thread...")
     print("✅ Initializing KGGen in main thread...")
+    set_thread_instance(threading.current_thread())
     kg = KGGen(
         model="openai/gpt-4o",
         temperature=0.0,
