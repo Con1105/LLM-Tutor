@@ -41,6 +41,7 @@ import json
 from openai import OpenAI
 from difflib import get_close_matches
 from collections import Counter
+from kg_instance import kg
 """# KGGEN
 
 ### Initialisation
@@ -696,7 +697,7 @@ def remove_transitive_edges_verbose(graph):
 
     graph.relations = list(reduced_G.edges())
 
-def extract_kg_from_pdf_bytes(pdf_bytes, kg):
+def extract_kg_from_pdf_bytes(pdf_bytes):
     # Create the KGGen object ONCE at the module level
     # from kg_gen import KGGen  # <== lazy import here avoids thread clash
 
