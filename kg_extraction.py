@@ -702,7 +702,7 @@ def remove_transitive_edges_verbose(graph):
 
     graph.relations = list(reduced_G.edges())
 
-def extract_kg_from_pdf_bytes(pdf_bytes):
+def extract_kg_from_pdf_bytes(pdf_bytes, kg):
     # Create the KGGen object ONCE at the module level
     # from kg_gen import KGGen  # <== lazy import here avoids thread clash
 
