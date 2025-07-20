@@ -4,7 +4,7 @@ from kg_gen import KGGen
 from kg_instance import set_kg_instance, set_thread_instance
 import threading
 import dspy
-from dspy import OpenAI
+from openai import OpenAI
 
 if __name__ == "__main__":
     # Initialize KGGen here in the true main thread
