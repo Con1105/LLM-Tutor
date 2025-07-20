@@ -13,3 +13,5 @@ pygraphviz
 streamlit
 networkx
 streamlit-plotly-events
+matplotlib
+
