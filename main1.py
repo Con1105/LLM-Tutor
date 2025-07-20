@@ -4,7 +4,6 @@ from kg_instance import get_kg
 kg = None
 
 def get_kg():
-    global kg
     if kg is None:
         raise RuntimeError("KGGen must be initialized in main1.py before use.")
     return kg
