@@ -1,5 +1,7 @@
 # kg_instance.py
+# Global variables to hold instance and initializing thread ID
 kg = None
+kg_thread_id = None
 
 def set_kg_instance(instance):
     global kg
