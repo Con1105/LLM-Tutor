@@ -13,7 +13,6 @@ if __name__ == "__main__":
     # Initialize KGGen here in the true main thread
     print("Initializing KGGen in main thread...")
     print("✅ Initializing KGGen in main thread...")
-    global kg
     kg = KGGen(
         model="openai/gpt-4o",
         temperature=0.0,
