@@ -24,7 +24,7 @@ Original file is located at
 
 """# Libraries"""
 
-from kg_gen import KGGen
+# from kg_gen import KGGen
 import networkx as nx
 import matplotlib.pyplot as plt
 import fitz  # PyMuPDF
@@ -49,13 +49,13 @@ import streamlit as st
 
 # In kg_extraction.py
 
-@st.cache_resource
-def get_kg():
-    return KGGen(
-        model="openai/gpt-4o",
-        temperature=0.0,
-        api_key="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"
-    )
+# @st.cache_resource
+# def get_kg():
+#     return KGGen(
+#         model="openai/gpt-4o",
+#         temperature=0.0,
+#         api_key="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"
+#     )
 
 
 def find_main_node_triplets(graph):
@@ -698,7 +698,13 @@ def remove_transitive_edges_verbose(graph):
 
 def extract_kg_from_pdf_bytes(pdf_bytes):
     # Create the KGGen object ONCE at the module level
-    kg = get_kg()
+    from kg_gen import KGGen  # <== lazy import here avoids thread clash
+
+    kg = KGGen(
+        model="openai/gpt-4o",
+        temperature=0.0,
+        api_key="sk-..."
+    )
     pdf_stream = io.BytesIO(pdf_bytes)
     doc = fitz.open(stream=pdf_stream, filetype="pdf")
     text = ""
