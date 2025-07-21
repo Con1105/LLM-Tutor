@@ -203,12 +203,18 @@ def convert_entities_to_dependency_dict(graph, client):
     prompt = f"""
     You are given Entities.
 
+    📌 What is a prerequisite?
+    A concept **A** is a prerequisite of **B** if:
+    - A is almost always taught **before** B in standard university curricula, academic syllabi, or well-established MOOCs (e.g., MIT, Stanford, Coursera).
+    - A is essential foundational knowledge needed to understand B.
+    - A should **not** be included as a prerequisite if it's merely related or occasionally taught before — it must be consistently taught before B.
+    
     Your task is to return a single nested dictionary, where:
     - Each **key** is one of the provided entities.
-    - Prerequisite of an educational concept here means a second educational concept often taught in a curriculum before the other educational concept, or the second concept is a broad area of the first one. 
     - The **value** is a dictionary of its direct prerequisite concepts that are **often found in curiculums/courses**. Generate up to 3 prerequisites and only if necessary.
     - Each prerequisite can itself have its own prerequisites, recursively. Do not go too deep unless necessary.
     - If a concept has **no prerequisites**, its value should be `null`.
+    - You may include shallow nested prerequisites (e.g., one or two levels), but avoid unnecessary deep recursion.
 
     Only include concepts that are educational (i.e., found in school/university curricula or well-defined academic resources).
 
@@ -226,9 +232,8 @@ def convert_entities_to_dependency_dict(graph, client):
           "Probability Theory": null
         }}
       }},
-      "Machine Learning": {{
-        "Neural Networks": null,
-        "Probability Theory": null
+      "Gradient Descent": {{
+        "Calculus": null
       }}
     }}
 
