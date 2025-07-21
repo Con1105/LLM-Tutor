@@ -1,7 +1,7 @@
 from openai import OpenAI
 import streamlit as st
 
-client = OpenAI(api_key="OPENAI_API_KEY")  # Replace with your actual key or use env var
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])  # Replace with your actual key or use env var
 
 def tutor_agent(concept, chat_history):
     """
