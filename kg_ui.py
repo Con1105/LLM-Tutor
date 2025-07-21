@@ -10,7 +10,7 @@ def get_kg():
     return KGGen(
         model="openai/gpt-4o",
         temperature=0.0,
-        api_key="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"
+        api_key="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"
     )
 
 st.set_page_config(layout="wide")
