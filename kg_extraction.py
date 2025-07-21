@@ -123,8 +123,8 @@ def augment_graph_with_gpt_entities_relations(graph, pdf_text, client):
         filtered_entities = set(parsed["filtered_entities"])
         filtered_relations = set(tuple(triplet) for triplet in parsed["filtered_relations"])
 
-        graph.entities = list(set(graph.entities).union(filtered_entities))
-        graph.relations = list(set(graph.relations).union(filtered_relations))
+        graph.entities = sorted(list(set(graph.entities).union(filtered_entities)))
+        graph.relations = sorted(list(set(graph.relations).union(filtered_relations)))
 
         print("✅ Parsed and updated graph successfully.")
     except Exception as e:
@@ -186,7 +186,7 @@ def add_prerequisite_relations(graph, client):
         current_relations = set(tuple(r) for r in graph.relations)
         combined_relations = current_relations.union(new_relations)
 
-        graph.relations = list(combined_relations)
+        graph.relations = sorted(list(combined_relations))
 
         print("✅ Prerequisite relations added successfully.")
     except Exception as e:
@@ -406,7 +406,7 @@ def convert_relations_to_dependency_format(graph, client):
         parsed = json.loads(json_text)
         dependency_relations = set(tuple(doublet) for doublet in parsed["filtered_relations"])
 
-        graph.relations = list(dependency_relations)
+        graph.relations = sorted(list(dependency_relations))
 
         print("✅ Relations converted to dependency format successfully.")
     except Exception as e:
@@ -665,7 +665,7 @@ def enforce_dag_and_root(graph, main_node):
         print(f"✅ Main node '{main_node}' is already a root.")
 
     # Step 4: Update graph
-    graph.relations = list(G.edges())
+    graph.relations = sorted(list(G.edges()))
 
 
 def remove_transitive_edges_verbose(graph):
@@ -700,7 +700,7 @@ def remove_transitive_edges_verbose(graph):
     else:
         print("✅ No redundant edges found.")
 
-    graph.relations = list(reduced_G.edges())
+    graph.relations = sorted(list(reduced_G.edges()))
 
 def extract_kg_from_pdf_bytes(pdf_bytes, kg):
     # Create the KGGen object ONCE at the module level
@@ -739,9 +739,9 @@ def extract_kg_from_pdf_bytes(pdf_bytes, kg):
         filtered_relations, filtered_entities = deduplicate_entities(raw_edges)
 
         # Use directly with your visualization
-        graph.relations = list(set(graph.relations).union(filtered_relations))
+        graph.relations = sorted(list(set(graph.relations).union(filtered_relations)))
 
-        graph.entities = list(set(graph.entities).union(filtered_entities))
+        graph.entities = sorted(list(set(graph.entities).union(filtered_entities)))
 
     except json.JSONDecodeError as e:
         print("❌ JSON parsing failed:", e)
