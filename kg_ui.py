@@ -5,7 +5,13 @@ from io import BytesIO
 from kg_extraction import extract_kg_from_pdf_bytes, create_directed_tree_graph_from_graph_object
 from collections import defaultdict, deque
 # from kg_gen import KGGen
-
+@st.cache_resource(show_spinner="Loading KGGen...")
+def get_kg():
+    return KGGen(
+        model="openai/gpt-4o",
+        temperature=0.0,
+        api_key="your-api-key"
+    )
 
 st.set_page_config(layout="wide")
 
@@ -208,7 +214,7 @@ if uploaded_file:
     pdf_bytes = uploaded_file.read()
     # Step 3: Run the function in kg_extraction.py
     if 'graph' not in st.session_state or st.session_state.last_uploaded != pdf_bytes:
-        graph = extract_kg_from_pdf_bytes(pdf_bytes)
+        graph = extract_kg_from_pdf_bytes(pdf_bytes, get_kg())
         print(graph.entities)
         st.session_state.graph = graph
         st.session_state.selected_nodes = set()
