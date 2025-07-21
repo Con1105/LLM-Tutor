@@ -1,7 +1,8 @@
 from openai import OpenAI
+import streamlit as st
 
 # Replace with your actual API key
-client = OpenAI(api_key="OPENAI_API_KEY")  # Replace with your actual key or use env var
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])  # Replace with your actual key or use env var
 
 
 def create_quiz_from_lesson(file_path):
