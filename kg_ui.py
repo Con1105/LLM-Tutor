@@ -17,7 +17,6 @@ st.set_page_config(layout="wide")
 
 st.markdown("""
     <style>
-    /* Use screen percentage for padding */
     .block-container {
         padding-left: 5vw !important;
         padding-right: 5vw !important;
