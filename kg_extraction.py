@@ -72,7 +72,7 @@ def find_main_node_triplets(graph):
     main_node = out_degree_counts.most_common(1)[0][0] if out_degree_counts else None
     return main_node
 
-client = OpenAI(api_key="OPENAI_API_KEY")
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 
 def augment_graph_with_gpt_entities_relations(graph, pdf_text, client):
