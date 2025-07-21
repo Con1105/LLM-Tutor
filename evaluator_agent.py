@@ -1,7 +1,7 @@
 from openai import OpenAI
 
 # Replace with your actual API key
-client = OpenAI(api_key="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")  # Replace with your actual key or use env var
+client = OpenAI(api_key="OPENAI_API_KEY")  # Replace with your actual key or use env var
 
 
 def create_quiz_from_lesson(file_path):
