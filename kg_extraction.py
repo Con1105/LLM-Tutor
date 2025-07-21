@@ -205,8 +205,8 @@ def convert_entities_to_dependency_dict(graph, client):
 
     Your task is to return a single nested dictionary, where:
     - Each **key** is one of the provided entities.
-    - The **value** is a dictionary of its direct prerequisite concepts found from curiculums/courses.  However, do not generate prerequisites unless clearly necessary.
-    - Each prerequisite can itself have its own prerequisites, recursively. However, do not generate deep recursive prerequisites unless clearly necessary.
+    - The **value** is a dictionary of its direct prerequisite concepts found from MULTIPLE curiculums/courses. However, do not generate prerequisites unless clearly necessary.
+    - Each prerequisite can itself have its own prerequisites, recursively. However, do not generate deep recursive prerequisites unless they are frequently found as prerequisites of the concept examined.
     - If a concept has **no prerequisites**, its value should be `null`.
 
     Only include concepts that are educational (i.e., found in school/university curricula or well-defined academic resources).
