@@ -10,7 +10,7 @@ def get_kg():
     return KGGen(
         model="openai/gpt-4o",
         temperature=0.0,
-        api_key="OPENAI_API_KEY"
+        api_key=api_key=st.secrets["OPENAI_API_KEY"]
     )
 
 st.set_page_config(layout="wide")
