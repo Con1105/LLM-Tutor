@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 from io import BytesIO
 from kg_extraction import extract_kg_from_pdf_bytes, create_directed_tree_graph_from_graph_object
 from collections import defaultdict, deque
-# from kg_gen import KGGen
+from kg_gen import KGGen
 @st.cache_resource(show_spinner="Loading KGGen...")
 def get_kg():
     return KGGen(
