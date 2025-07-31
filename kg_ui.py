@@ -213,11 +213,12 @@ if uploaded_file:
     pdf_bytes = uploaded_file.read()
     # Step 3: Run the function in kg_extraction.py
     if 'graph' not in st.session_state or st.session_state.last_uploaded != pdf_bytes:
-        graph = extract_kg_from_pdf_bytes(pdf_bytes, get_kg())
-        print(graph.entities)
-        st.session_state.graph = graph
-        st.session_state.selected_nodes = set()
-        st.session_state.last_uploaded = pdf_bytes
+        with st.spinner("⏳ Extracting Knowledge Graph..."):
+            graph = extract_kg_from_pdf_bytes(pdf_bytes, get_kg())
+            print(graph.entities)
+            st.session_state.graph = graph
+            st.session_state.selected_nodes = set()
+            st.session_state.last_uploaded = pdf_bytes
     else:
         graph = st.session_state.graph
 
