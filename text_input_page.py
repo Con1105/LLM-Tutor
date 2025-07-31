@@ -83,7 +83,8 @@ if st.session_state.lesson_displayed:
                 f.write(f"Q: {entry['Q']}\nA: {entry['A']}\n\n")
 
         lesson_file_path = f"{st.session_state.concept}_lesson.txt"
-        quiz = create_quiz_from_lesson(lesson_file_path)
+        with st.spinner("⏳ Creating Quiz..."):
+            quiz = create_quiz_from_lesson(lesson_file_path)
         st.session_state.quiz = quiz
         st.session_state.quiz_feedback = ""
         st.session_state.student_response = ""
@@ -105,7 +106,8 @@ if st.session_state.quiz:
         student_response = st.text_area("✍️ Your answers:", height=300)
         if st.button("Submit Answers"):
             lesson_file_path = f"{st.session_state.concept}_lesson.txt"
-            feedback = evaluate_quiz_answers(lesson_file_path, st.session_state.quiz, student_response)
+            with st.spinner("⏳ Wait for feedback..."):
+                feedback = evaluate_quiz_answers(lesson_file_path, st.session_state.quiz, student_response)
 
             st.session_state.quiz_feedback = feedback
             st.session_state.student_response = student_response
