@@ -112,7 +112,7 @@ def augment_graph_with_gpt_entities_relations(graph, pdf_text, client):
             temperature=0.0
         )
         raw_response = response.choices[0].message.content.strip()
-        print("🔍 Raw LLM response:")
+        print("Raw LLM response:")
         print(raw_response)
 
         # Extract valid JSON block
@@ -172,7 +172,7 @@ def add_prerequisite_relations(graph, client):
         )
 
         raw_response = response.choices[0].message.content.strip()
-        print("🔍 Raw LLM response:")
+        print("Raw LLM response:")
         print(raw_response)
         # Extract a valid JSON block
         start = raw_response.find('{')
@@ -254,7 +254,7 @@ def convert_entities_to_dependency_dict(graph, client):
         )
 
         raw_response = response.choices[0].message.content.strip()
-        print("🔍 Raw LLM response:")
+        print("Raw LLM response:")
         print(raw_response)
         # Extract a valid JSON block    
         start = raw_response.find('{')
@@ -263,7 +263,7 @@ def convert_entities_to_dependency_dict(graph, client):
 
         nested_dependency_dict = json.loads(json_text)
 
-        print("✅ Dependency dictionary parsed successfully.")
+        print("Dependency dictionary parsed successfully.")
         return nested_dependency_dict
 
     except Exception as e:
@@ -403,7 +403,7 @@ def convert_relations_to_dependency_format(graph, client):
         )
 
         raw_response = response.choices[0].message.content.strip()
-        print("🔍 Raw LLM response:")
+        print("Raw LLM response:")
         print(raw_response)
         # Extract a valid JSON block
         start = raw_response.find('{')
@@ -415,9 +415,9 @@ def convert_relations_to_dependency_format(graph, client):
 
         graph.relations = sorted(list(dependency_relations))
 
-        print("✅ Relations converted to dependency format successfully.")
+        print("Relations converted to dependency format successfully.")
     except Exception as e:
-        print("❌ Failed to convert relations to dependency format:", e)
+        print("Failed to convert relations to dependency format:", e)
 
 
 def create_directed_tree_graph_from_graph_object(graph):
@@ -597,7 +597,7 @@ Return only the JSON.
         )
 
         raw_response = response.choices[0].message.content.strip()
-        print("🔍 Raw LLM response:")
+        print("Raw LLM response:")
         print(raw_response)
         start = raw_response.find('{')
         end = raw_response.rfind('}') + 1
@@ -661,7 +661,7 @@ def enforce_dag_and_root(graph, main_node):
     # Step 3: Ensure main node is a root (remove all incoming edges)
     incoming_to_main = list(G.in_edges(main_node))
     if incoming_to_main:
-        print(f"🔧 Removing incoming edges to main node '{main_node}':")
+        print(f"Removing incoming edges to main node '{main_node}':")
         for src, tgt in incoming_to_main:
             print(f"Removing edge: {src} -> {tgt}")
             G.remove_edge(src, tgt)
@@ -757,7 +757,7 @@ def extract_kg_from_pdf_bytes(pdf_bytes, kg):
     enforce_dag_and_root(graph, main_node=main)
     if main in graph.entities:
         connect_to_main_node(graph, main)
-        print("✅ Main node is {main}.")
+        print("Main node is {main}.")
     remove_transitive_edges_verbose(graph)
 
     # Convert relations to (src, tgt) pairs if they are triples
