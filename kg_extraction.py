@@ -43,6 +43,7 @@ from difflib import get_close_matches
 from collections import Counter
 # from kg_instance import get_kg_instance
 import streamlit as st
+import networkx as nx
 # from kg_instance import kg
 """# KGGEN
 
@@ -126,9 +127,9 @@ def augment_graph_with_gpt_entities_relations(graph, pdf_text, client):
         graph.entities = sorted(list(set(graph.entities).union(filtered_entities)))
         graph.relations = sorted(list(set(graph.relations).union(filtered_relations)))
 
-        print("✅ Parsed and updated graph successfully.")
+        print("Parsed and updated graph successfully.")
     except Exception as e:
-        print("❌ Failed to augment graph:", e)
+        print("Failed to augment graph:", e)
 
 
 
@@ -188,9 +189,9 @@ def add_prerequisite_relations(graph, client):
 
         graph.relations = sorted(list(combined_relations))
 
-        print("✅ Prerequisite relations added successfully.")
+        print("Prerequisite relations added successfully.")
     except Exception as e:
-        print("❌ Failed to add prerequisite relations:", e)
+        print("Failed to add prerequisite relations:", e)
 
 
 def convert_entities_to_dependency_dict(graph, client):
@@ -203,7 +204,7 @@ def convert_entities_to_dependency_dict(graph, client):
     prompt = f"""
     You are given Entities.
 
-    📌 What is a prerequisite?
+    What is a prerequisite?
     A concept **A** is a prerequisite of **B** if:
     - A is almost always taught **before** B in standard university curricula, academic syllabi, or well-established MOOCs (e.g., MIT, Stanford, Coursera).
     - A is essential foundational knowledge needed to understand B.
@@ -218,7 +219,7 @@ def convert_entities_to_dependency_dict(graph, client):
 
     Only include concepts that are educational (i.e., found in school/university curricula or well-defined academic resources).
 
-    📌 Example:
+    Example:
     Input: ["Reinforcement Learning", "Machine Learning"]
     Output:
     {{
@@ -266,11 +267,11 @@ def convert_entities_to_dependency_dict(graph, client):
         return nested_dependency_dict
 
     except Exception as e:
-        print("❌ Failed to generate dependency dictionary:", e)
+        print("Failed to generate dependency dictionary:", e)
         return {}
 
 
-# --- Step 1: Flatten nested dictionary into triplet edges ---
+# --- Flatten nested dictionary into triplet edges ---
 def flatten_prereq_tree(concept, subtree, edges):
     if subtree is None:
         return
@@ -284,7 +285,7 @@ def build_edges_from_nested_dict(nested_dict):
         flatten_prereq_tree(root, subtree, edges)
     return edges
 
-# --- Step 2: Deduplicate concept names and normalize ---
+# --- Deduplicate concept names and normalize ---
 def deduplicate_entities(edges, threshold=0.75):
     """Deduplicate and normalize entity names"""
     nodes = list(set([src for src, _, tgt in edges] + [tgt for _, _, tgt in edges]))
@@ -322,7 +323,7 @@ def deduplicate_entities(edges, threshold=0.75):
 
     return list(set(deduped_edges)), set(node_map.values())
 
-# --- Step 3: Integrate with OpenAI response ---
+# --- Integrate with OpenAI response ---
 # response.choices[0].message.content is your string from the LLM
 
 # raw_response = response.choices[0].message.content.strip()
@@ -345,8 +346,8 @@ def deduplicate_entities(edges, threshold=0.75):
 #     graph.entities = list(set(graph.entities).union(filtered_entities))
 
 # except json.JSONDecodeError as e:
-#     print("❌ JSON parsing failed:", e)
-#     print("⛔️ Raw content:\n", json_text)
+#     print(" JSON parsing failed:", e)
+#     print(" Raw content:\n", json_text)
 
 
 def convert_relations_to_dependency_format(graph, client):
@@ -458,7 +459,6 @@ def create_directed_tree_graph_from_graph_object(graph):
             y = -depth * layer_gap
             pos[node] = (x, y)
 
-    # Draw nodes with alternating label positions
     # Draw nodes with alternating label positions based on (depth, horizontal position)
     node_positions = [(node, *pos.get(node, (0, 0))) for node in G.nodes()]
     # Sort first by depth (y), then by horizontal x
@@ -538,7 +538,7 @@ def create_directed_tree_graph_from_graph_object(graph):
 
 
 
-# Step 1: Remove entities with no edges
+# Remove entities with no edges
 def prune_isolated_entities(graph):
     connected = set()
     for src, tgt in graph.relations:
@@ -546,12 +546,12 @@ def prune_isolated_entities(graph):
         connected.add(tgt)
     graph.entities = [e for e in graph.entities if e in connected]
 
-# Step 2: Find the "main" node (source of most edges)
+# Find the "main" node (source of most edges)
 def find_main_node_doublets(graph):
     src_counts = Counter(src for src, _ in graph.relations)
     return src_counts.most_common(1)[0][0] if src_counts else None
 
-# Step 3: Connect all top-level nodes to the main node
+# Connect all top-level nodes to the main node
 def connect_to_main_node(graph, main):
     children = set(tgt for _, tgt in graph.relations)
     to_connect = [e for e in graph.entities if e not in children and e != main]
@@ -606,21 +606,21 @@ Return only the JSON.
         main_concept = parsed.get("main_concept", None)
 
         if not main_concept:
-            print("⚠️ No main concept returned by GPT.")
+            print("No main concept returned by GPT.")
             return None
 
         # Match it case-insensitively to entities in the graph
         match = next((e for e in graph.entities if e.lower() == main_concept.lower()), None)
 
         if match:
-            print(f"✅ Main concept identified: {match}")
+            print(f"Main concept identified: {match}")
         else:
-            print(f"⚠️ GPT returned '{main_concept}', which is not found in graph entities.")
+            print(f"GPT returned '{main_concept}', which is not found in graph entities.")
 
         return match
 
     except Exception as e:
-        print("❌ Failed to identify main concept with GPT:", e)
+        print("Failed to identify main concept with GPT:", e)
         return None
 
 # --- Apply all ---
@@ -631,9 +631,7 @@ Return only the JSON.
 
 #     fig = create_directed_tree_graph_from_graph_object(graph)
 
-import networkx as nx
 
-import networkx as nx
 
 def enforce_dag_and_root(graph, main_node):
     """
@@ -655,20 +653,20 @@ def enforce_dag_and_root(graph, main_node):
             if not cycle:
                 break
             src, tgt, _ = cycle[0]
-            print(f"⛔ Removing cycle edge: {src} -> {tgt}")
+            print(f"Removing cycle edge: {src} -> {tgt}")
             G.remove_edge(src, tgt)
     except nx.NetworkXNoCycle:
-        print("✅ No cycles found.")
+        print("No cycles found.")
 
     # Step 3: Ensure main node is a root (remove all incoming edges)
     incoming_to_main = list(G.in_edges(main_node))
     if incoming_to_main:
         print(f"🔧 Removing incoming edges to main node '{main_node}':")
         for src, tgt in incoming_to_main:
-            print(f"⛔ Removing edge: {src} -> {tgt}")
+            print(f"Removing edge: {src} -> {tgt}")
             G.remove_edge(src, tgt)
     else:
-        print(f"✅ Main node '{main_node}' is already a root.")
+        print(f"Main node '{main_node}' is already a root.")
 
     # Step 4: Update graph
     graph.relations = sorted(list(G.edges()))
@@ -682,7 +680,7 @@ def remove_transitive_edges_verbose(graph):
 
     # Step 2: Check if DAG
     if not nx.is_directed_acyclic_graph(G):
-        print("⚠️ Graph is not a DAG. Cannot perform transitive reduction.")
+        print("Graph is not a DAG. Cannot perform transitive reduction.")
         return
 
     # Step 3: Perform transitive reduction
@@ -700,11 +698,11 @@ def remove_transitive_edges_verbose(graph):
 
     # Step 5: Report and update
     if removed:
-        print("🔍 Removed redundant edges:")
+        print("Removed redundant edges:")
         for (src, tgt), path in removed:
             print(f"Removed: ({src} → {tgt}) — Covered by path: {' → '.join(path)}")
     else:
-        print("✅ No redundant edges found.")
+        print("No redundant edges found.")
 
     graph.relations = sorted(list(reduced_G.edges()))
 
@@ -750,7 +748,7 @@ def extract_kg_from_pdf_bytes(pdf_bytes, kg):
         graph.entities = sorted(list(set(graph.entities).union(filtered_entities)))
 
     except json.JSONDecodeError as e:
-        print("❌ JSON parsing failed:", e)
+        print("JSON parsing failed:", e)
 
     convert_relations_to_dependency_format(graph, client)
     prune_isolated_entities(graph)
