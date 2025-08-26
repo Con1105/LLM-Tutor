@@ -46,3 +46,8 @@ All necessary dependencies are listed in `requirements.txt`. Install them via:
 
 ```bash
 pip install -r requirements.txt
+
+```
+## 📂 Repository
+
+The full source code is available here: [LLM-Tutor on GitHub](https://github.com/Con1105/LLM-Tutor)
