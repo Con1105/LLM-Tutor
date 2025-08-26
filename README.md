@@ -1,6 +1,6 @@
 # Intelligent Tutor System Prototypes
 
-This repository contains two prototype applications developed as part of a dissertation project on LLM-based Intelligent Tutoring Systems (ITS). Both applications are implemented in **Streamlit** and deployed on the Streamlit Community Cloud.
+This repository contains two prototype applications developed as part of a dissertation project on LLM-based Intelligent Tutoring System (ITS) for Academic Papers. Both applications are implemented in **Streamlit** and deployed on the Streamlit Community Cloud.
 
 ---
 
