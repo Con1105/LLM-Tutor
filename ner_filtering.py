@@ -80,17 +80,17 @@ def filter_and_clean_entities(entities, relations, entity_tags):
             # Only filter out ORG entities if they are NOT used as sources in any edge
             if entity not in source_entities:
                 filtered_out_entities.add(entity)
-                print(f"  🏢 Removing ORG entity '{entity}' (not used as source in any edge)")
+                print(f"Removing ORG entity '{entity}' (not used as source in any edge)")
             else:
-                print(f"  ✅ Keeping ORG entity '{entity}' (used as source in edges)")
+                print(f"Keeping ORG entity '{entity}' (used as source in edges)")
         if 'NORP' in tags:
             norp_entities.add(entity)
             # Only filter out NORP entities if they are NOT used as sources in any edge
             if entity not in source_entities:
                 filtered_out_entities.add(entity)
-                print(f"  🌍 Removing NORP entity '{entity}' (not used as source in any edge)")
+                print(f"Removing NORP entity '{entity}' (not used as source in any edge)")
             else:
-                print(f"  ✅ Keeping NORP entity '{entity}' (used as source in edges)")
+                print(f"Keeping NORP entity '{entity}' (used as source in edges)")
     
     print(f"Found {len(person_entities)} entities with PERSON tags: {person_entities}")
     print(f"Found {len(location_entities)} entities with LOCATION tags: {location_entities}")
@@ -141,4 +141,5 @@ def process_graph_with_ner(graph):
     )
     
     # Return a SimpleNamespace for linter/static analysis friendliness
+
     return types.SimpleNamespace(entities=filtered_entities, relations=filtered_relations) 
