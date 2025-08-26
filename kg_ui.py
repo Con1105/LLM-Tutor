@@ -268,7 +268,7 @@ if uploaded_file:
             height=800,
         )
     except Exception as e:
-        st.error("❌ The graph is too complex or large to display properly.")
+        st.error("The graph is too complex or large to display properly.")
         st.exception(e)
 
 
@@ -310,3 +310,4 @@ if uploaded_file:
             st.warning("No nodes selected for removal.")
 else:
     st.write("Please upload a PDF to see the knowledge graph.")
+
