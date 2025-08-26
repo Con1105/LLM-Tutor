@@ -12,8 +12,7 @@ This repository contains two prototype applications developed as part of a disse
 
 The **Content Model Module Tool** allows a user to upload an academic paper through a Streamlit interface (`kg_ui.py`). The interface passes the PDF to the backend (`kg_extraction.py`), which creates a **knowledge graph (KG)** of concepts and their prerequisite relationships.  
 
-As part of the extraction pipeline, the tool calls **spaCy** (via `ner_filtering.py`) to perform Named Entity Recognition (NER) and tag nodes in the graph. This helps improve the quality of extracted concepts before they are presented to the user.
-
+As part of the extraction pipeline, the tool calls **spaCy** (via `ner_filtering.py`) to perform Named Entity Recognition (NER) and tag nodes in the graph.
 🔗 Live app: [Content Model Module Tool](https://llm-tutor-int5fhkcsicwhsgq2pfu3s.streamlit.app/)
 
 ---
