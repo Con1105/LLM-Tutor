@@ -83,7 +83,7 @@ if st.session_state.lesson_displayed:
                 f.write(f"Q: {entry['Q']}\nA: {entry['A']}\n\n")
 
         lesson_file_path = f"{st.session_state.concept}_lesson.txt"
-        with st.spinner("⏳ Creating Quiz..."):
+        with st.spinner("Creating Quiz..."):
             quiz = create_quiz_from_lesson(lesson_file_path)
         st.session_state.quiz = quiz
         st.session_state.quiz_feedback = ""
@@ -93,17 +93,17 @@ if st.session_state.lesson_displayed:
 
 # Quiz Display and Submission
 if st.session_state.quiz:
-    st.subheader("📜 Quiz Time!")
+    st.subheader("Quiz Time!")
     st.info("A custom quiz has been generated based on your lesson and Q&A. Please answer below.")
     st.markdown(f"**Quiz:**\n\n{st.session_state.quiz}")
 
     if st.session_state.quiz_submitted:
         st.markdown("**Your Answers:**")
-        st.text_area("✍️ Your answers:", value=st.session_state.student_response, height=300, disabled=True)
-        st.subheader("📊 Feedback & Score")
+        st.text_area("Your answers:", value=st.session_state.student_response, height=300, disabled=True)
+        st.subheader("Feedback & Score")
         st.markdown(st.session_state.quiz_feedback)
     else:
-        student_response = st.text_area("✍️ Your answers:", height=300)
+        student_response = st.text_area("Your answers:", height=300)
         if st.button("Submit Answers"):
             lesson_file_path = f"{st.session_state.concept}_lesson.txt"
             with st.spinner("⏳ Wait for feedback..."):
@@ -122,3 +122,4 @@ if st.session_state.quiz:
         # st.session_state.messages = []
         # st.session_state.qa_log = []
         # st.session_state.concept = ""
+
